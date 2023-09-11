@@ -1,0 +1,166 @@
+% 定义所有的图片文件在 figures 子目录下
+\graphicspath{{2figure/}}
+
+% margin
+\usepackage{geometry}
+\usepackage{fancyhdr}
+% chinese
+\usepackage{ctex}
+% insert picture
+\usepackage{graphicx}
+% multi picture
+\usepackage{subfigure}
+% multi-culture
+\usepackage[english]{babel}
+% Times New Roman
+\usepackage{mathptmx}
+% theory env
+\usepackage{amsthm}
+% Customized font code
+\usepackage{fontenc}
+% float body(pic, table, algo)setting, general set[H]
+\usepackage{float}
+% algorithm
+\usepackage[ruled,linesnumbered]{algorithm2e}
+%----------------------------------------------
+\setbeamertemplate{frame numbering}[counter]
+%% counter, none, fraction
+
+\setbeamertemplate{frametitle}[plain]
+
+% \setbeamerfont{description item}{series=\bfseries}
+% \setbeamerfont{alerted text}{series=\bfseries}
+%----------------------------------------------
+%\definecolor{MonashBlue}{RGB}{0, 99, 167}
+%\definecolor{Orange}{RGB}{204, 89, 0}
+%\definecolor{DarkYellow}{RGB}{230, 172, 0}
+%\definecolor{grey}{RGB}{191,191,191}
+%\definecolor{DarkGrey}{RGB}{100,100,100}
+%\definecolor{LightGrey}{RGB}{231,231,231}
+%\definecolor{LightWhite}{RGB}{245,245,245}
+%\definecolor{MyBlue}{RGB}{0,100,126}
+
+\definecolor{MonashBlue}{HTML}{0063A7}
+\definecolor{Orange}{HTML}{CC5900}
+\definecolor{DarkYellow}{HTML}{E6AC00}
+\definecolor{grey}{HTML}{BFBFBF}
+\definecolor{DarkGrey}{HTML}{646464}
+\definecolor{LightGrey}{HTML}{E7E7E7}
+\definecolor{LightWhite}{HTML}{F5F5F5}
+\definecolor{MyBlue}{HTML}{00647E}
+
+\setbeamercolor{normal text}{fg=black!80,bg=LightWhite}
+\usebeamercolor[fg]{normal text}
+\setbeamercolor{progress bar}{fg=Orange}
+\setbeamercolor{frametitle}{fg=black!2,bg=MyBlue}
+\setbeamercolor{enumerate item}{fg=Orange,bg=LightGrey}
+\setbeamercolor{enumerate subitem}{fg=red,bg=red!20!white}
+\setbeamercolor{itemize item}{fg=Orange}
+\setbeamercolor{itemize subitem}{fg=Orange!50!yellow}
+\setbeamercolor{description item}{fg=DarkYellow}
+\setbeamercolor{title}{fg=black!,bg=MonashBlue}
+\setbeamercolor{section}{fg=MonashBlue}
+\setbeamercolor{subsection}{fg=MonashBlue}
+\setbeamercolor{itemize}{fg=black}
+\setbeamercolor{alerted text}{fg=DarkYellow}
+\setbeamercolor{block body alerted}{fg=black,bg=DarkYellow}
+\setbeamercolor{block body}{fg=black,bg=black!25!white}
+\setbeamercolor{structure}{fg=black}
+\setbeamercolor{block title}{fg=white,bg=Orange}
+\setbeamercolor{block title alerted}{fg=white,bg=black}
+
+%----------------------------------------------
+% Plenty of room
+\setbeamersize{text margin left=1.5em, text margin right=1.5em}
+
+%----------------------------------------------
+% Square bullets and enumerated items
+\setbeamertemplate{items}[square]
+\setbeamertemplate{enumerate item}[square]
+\setbeamertemplate{enumerate item}
+{
+  \hbox{%
+    \usebeamerfont*{item projected}%
+    \usebeamercolor[Orange]{item projected}% original: [bg]
+    \vrule width4ex height2.7ex depth.7ex%
+    \hskip-4ex%
+    \hbox to4ex{%
+      \hfil%
+      \color{LightGrey}\raisebox{.2ex}{\insertenumlabel}%
+      \hfil}%
+  }%
+}
+
+% Figure placement using textpos
+\usepackage{graphicx}
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+\def\placefig#1#2#3#4{\begin{textblock}{.1}(#1,#2)\rlap{\includegraphics[#3]{#4}}\end{textblock}}
+\def\fullheight#1{\placefig{0.1}{1.2}{height=8.3cm}{#1}}
+\def\fullwidth#1{\placefig{0.1}{1.2}{width=12.8cm}{#1}}
+
+% Clever right hand placement
+\newcommand*{\atright}[1]{{%
+  \unskip\nobreak\hfill\penalty50
+  \hskip2em\hbox{}\nobreak\hfill#1
+  \parfillskip=0pt\finalhyphendemerits=0\par}}
+  
+% put a test in (#1, #2)
+\newcommand{\placetext}[3]{%
+    \tikz[remember picture,overlay] \node[anchor=base] (a) {};%
+    \begin{tikzpicture}[overlay, remember picture]
+        \node at ([xshift=#1,yshift=#2]a.base) {#3};
+    \end{tikzpicture}%
+}
+
+% Slow reveal lists
+\def\biz{\begin{itemize}[<+-| alert@+>]}
+\def\eiz{\end{itemize}}
+\def\ben{\begin{enumerate}[<+-| alert@+>]}
+\def\een{\end{enumerate}}
+
+% A more interesting and tighter font
+\usepackage[lf,t]{carlito}
+
+% Beamer use sans font default
+% \setsansfont{Times New Roman}
+\setsansfont{Noto Serif CJK SC}
+%\setsansfont{Noto Sans CJK SC}
+\setCJKfamilyfont{NotoSerifCJKSC}{Noto Serif CJK SC}
+\setCJKfamilyfont{NotoSansCJKSC}{Noto Sans CJK SC}
+% \setCJKsansfont{SimSun}
+\setCJKsansfont{SimHei}
+
+\setbeamerfont{title}{family=\CJKfamily{NotoSerifCJKSC},series=\bfseries,parent=structure,size=\Huge}
+\setbeamerfont{authordate}{family=\CJKfamily{NotoSerifCJKSC},series=\bfseries,size=\large}
+
+% Paint Title Page
+% \setbeamertemplate{title page}{
+%   \begin{minipage}[b][\paperheight]{\textwidth}
+%     \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+%     \vfill%
+%     \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+%     \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+%     \usebeamertemplate*{title separator}
+%     \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
+%     \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+%     \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+%     \vfill
+%     \vspace*{1mm}
+%   \end{minipage}
+% }
+
+% Paint Title
+\setbeamertemplate{title page}{
+    \placefig{-0.01}{-0.01}
+    {width=1.01\paperwidth,height=1.01\paperheight}
+    {TitlePage}
+    \begin{textblock}{7.5}(1,3.5){
+        \color{white}\raggedright\usebeamerfont{title}\par\inserttitle
+    }
+    \end{textblock}
+    \begin{textblock}{7.5}(1,7){
+        \color{black!10}\raggedright\usebeamerfont{authordate}{\insertauthor}\\[0.5em]\insertdate}
+    \end{textblock}
+}

@@ -1,0 +1,277 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemekeli}[2017/01/23 Keli inner theme]
+\RequirePackage{etoolbox}
+\RequirePackage{keyval}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\RequirePackage{tikz}
+\pgfkeys{
+  /keli/inner/sectionpage/.cd,
+    .is choice,
+    none/.code=\keli@disablesectionpage,
+    simple/.code={\keli@enablesectionpage
+                  \setbeamertemplate{section page}[simple]},
+    progressbar/.code={\keli@enablesectionpage
+                       \setbeamertemplate{section page}[progressbar]},
+}
+\pgfkeys{
+  /keli/inner/subsectionpage/.cd,
+    .is choice,
+    none/.code=\keli@disablesubsectionpage,
+    simple/.code={\keli@enablesubsectionpage
+                  \setbeamertemplate{section page}[simple]},
+    progressbar/.code={\keli@enablesubsectionpage
+                       \setbeamertemplate{section page}[progressbar]},
+}
+\newcommand{\keli@inner@setdefaults}{
+  \pgfkeys{/keli/inner/.cd,
+    sectionpage=progressbar,
+    subsectionpage=none
+  }
+}
+% \setbeamertemplate{title page}{
+%   \begin{minipage}[b][\paperheight]{\textwidth}
+%     \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+%     \vfill%
+%     \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+%     \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+%     \usebeamertemplate*{title separator}
+%     \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
+%     \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+%     \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+%     \vfill
+%     \vspace*{1mm}
+%   \end{minipage}
+% }
+\def\maketitle{%
+  \ifbeamer@inframe
+    \titlepage
+  \else
+    \frame[plain,noframenumbering]{\titlepage}
+  \fi
+}
+\def\titlepage{%
+  \usebeamertemplate{title page}
+}
+\setbeamertemplate{title graphic}{
+  \vbox to 0pt {
+    \vspace*{2em}
+    \inserttitlegraphic%
+  }%
+  \nointerlineskip%
+}
+\setbeamertemplate{title}{
+  \raggedright%
+  \linespread{1.0}%
+  \inserttitle%
+  \par%
+  \vspace*{0.5em}
+}
+\setbeamertemplate{subtitle}{
+  \raggedright%
+  \insertsubtitle%
+  \par%
+  \vspace*{0.5em}
+}
+\newlength{\keli@titleseparator@linewidth}
+\setlength{\keli@titleseparator@linewidth}{2.4pt}
+\setbeamertemplate{title separator}{
+  \tikzexternaldisable%
+  \begin{tikzpicture}
+    \fill[fg] (0,0) rectangle (\textwidth, \keli@titleseparator@linewidth);
+  \end{tikzpicture}%
+  \tikzexternalenable%
+  \par%
+}
+\setbeamertemplate{author}{
+  \vspace*{2em}
+  \insertauthor%
+  \par%
+  \vspace*{0.25em}
+}
+\setbeamertemplate{date}{
+  \insertdate%
+  \par%
+}
+\setbeamertemplate{institute}{
+  \vspace*{3mm}
+  \insertinstitute%
+  \par%
+}
+\defbeamertemplate{section page}{simple}{
+  \begin{center}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\par
+    \ifx\insertsubsectionhead\@empty\else
+      \usebeamercolor[fg]{subsection title}
+      \usebeamerfont{subsection title}
+      \insertsubsectionhead
+    \fi
+  \end{center}
+}
+\defbeamertemplate{section page}{progressbar}{
+  \centering
+  \begin{minipage}{22em}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsectionhead\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsectionhead
+    \fi
+  \end{minipage}
+  \par
+  \vspace{\baselineskip}
+}
+\newcommand{\keli@disablesectionpage}{
+  \AtBeginSection{
+    % intentionally empty
+  }
+}
+\newcommand{\keli@enablesectionpage}{
+  \AtBeginSection{
+    \ifbeamer@inframe
+      \sectionpage
+    \else
+      \frame[plain,c,noframenumbering]{\sectionpage}
+    \fi
+  }
+}
+\setbeamertemplate{subsection page}{%
+  \usebeamertemplate*{section page}
+}
+\newcommand{\keli@disablesubsectionpage}{
+  \AtBeginSubsection{
+    % intentionally empty
+  }
+}
+\newcommand{\keli@enablesubsectionpage}{
+  \AtBeginSubsection{
+    \ifbeamer@inframe
+      \subsectionpage
+    \else
+      \frame[plain,c,noframenumbering]{\subsectionpage}
+    \fi
+  }
+}
+\newlength{\keli@progressonsectionpage}
+\newlength{\keli@progressonsectionpage@linewidth}
+\setlength{\keli@progressonsectionpage@linewidth}{0.4pt}
+\setbeamertemplate{progress bar in section page}{
+  \setlength{\keli@progressonsectionpage}{%
+    \textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+  }%
+  \tikzexternaldisable%
+  \begin{tikzpicture}
+    \fill[bg] (0,0) rectangle (\textwidth, \keli@progressonsectionpage@linewidth);
+    \fill[fg] (0,0) rectangle (\keli@progressonsectionpage, \keli@progressonsectionpage@linewidth);
+  \end{tikzpicture}%
+  \tikzexternalenable%
+}
+\def\inserttotalframenumber{100}
+\newlength{\keli@blocksep}
+\newlength{\keli@blockadjust}
+\setlength{\keli@blocksep}{0.75ex}
+\setlength{\keli@blockadjust}{0.25ex}
+\providecommand{\keli@strut}{%
+  \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
+}
+\newcommand{\keli@block}[1]{
+  \par\vskip\medskipamount%
+  \setlength{\parskip}{0pt}
+  \ifbeamercolorempty[bg]{block title#1}{%
+    \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}}{%
+  \ifbeamercolorempty[bg]{block title}{%
+    \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}%
+  }%
+  {%
+    \begin{beamercolorbox}[
+      sep=\dimexpr\keli@blocksep-\keli@blockadjust\relax,
+      leftskip=\keli@blockadjust,
+      rightskip=\dimexpr\keli@blockadjust plus 4em\relax
+    ]{block title#1}%
+  }}%
+      \usebeamerfont*{block title#1}%
+      \keli@strut%
+      \insertblocktitle%
+      \keli@strut%
+  \end{beamercolorbox}%
+  \nointerlineskip%
+  \ifbeamercolorempty[bg]{block body#1}{%
+    \begin{beamercolorbox}[vmode]{block body#1}}{
+  \ifbeamercolorempty[bg]{block body}{%
+    \begin{beamercolorbox}[vmode]{block body#1}%
+  }{%
+    \begin{beamercolorbox}[sep=\keli@blocksep, vmode]{block body#1}%
+    \vspace{-\keli@parskip}
+  }}%
+      \usebeamerfont{block body#1}%
+      \setlength{\parskip}{\keli@parskip}%
+}
+\setbeamertemplate{block begin}{\keli@block{}}
+\setbeamertemplate{block alerted begin}{\keli@block{ alerted}}
+\setbeamertemplate{block example begin}{\keli@block{ example}}
+\setbeamertemplate{block end}{\end{beamercolorbox}\vspace*{0.2ex}}
+\setbeamertemplate{block alerted end}{\end{beamercolorbox}\vspace*{0.2ex}}
+\setbeamertemplate{block example end}{\end{beamercolorbox}\vspace*{0.2ex}}
+\setbeamertemplate{itemize items}{\textbullet}
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{footnote}{%
+  \parindent 0em\noindent%
+  \raggedright
+  \usebeamercolor{footnote}\hbox to 0.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
+}
+\newlength{\keli@parskip}
+\setlength{\keli@parskip}{0.5em}
+\setlength{\parskip}{\keli@parskip}
+\linespread{1.15}
+\define@key{beamerframe}{c}[true]{% centered
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt plus 1fill\relax%
+  \beamer@frametopskipautobreak=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskipautobreak=0pt plus .6\paperheight\relax%
+  \def\beamer@initfirstlineunskip{}%
+}
+\providebool{keli@standout}
+\define@key{beamerframe}{standout}[true]{%
+  \booltrue{keli@standout}
+  \begingroup
+    \setkeys{beamerframe}{c}
+    \setkeys{beamerframe}{noframenumbering}
+    \ifbeamercolorempty[bg]{palette primary}{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=-palette primary.fg
+      }
+    }{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=palette primary.bg
+      }
+    }
+    \setbeamercolor{local structure}{
+      fg=palette primary.fg
+    }
+    \usebeamercolor[fg]{palette primary}
+}
+  \pretocmd{\beamer@reseteecodes}{%
+    \ifbool{keli@standout}{
+      \endgroup
+      \boolfalse{keli@standout}
+    }{}
+  }{}{}
+  \AtBeginEnvironment{beamer@frameslide}{
+    \ifbool{keli@standout}{
+      \centering
+      \usebeamerfont{standout}
+    }{}
+  }
+\keli@inner@setdefaults
+\ProcessPgfPackageOptions{/keli/inner}
+\endinput

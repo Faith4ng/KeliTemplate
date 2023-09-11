@@ -1,0 +1,125 @@
+%%
+%% This is file `beamerouterthememetropolis.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% beamerouterthememetropolis.dtx  (with options: `package')
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemekeli}[2017/01/23 Keli outer theme]
+\RequirePackage{etoolbox}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /keli/outer/numbering/.cd,
+    .is choice,
+    none/.code=\setbeamertemplate{frame numbering}[none],
+    counter/.code=\setbeamertemplate{frame numbering}[counter],
+    fraction/.code=\setbeamertemplate{frame numbering}[fraction],
+}
+\pgfkeys{
+  /keli/outer/progressbar/.cd,
+    .is choice,
+    none/.code={%
+      \setbeamertemplate{headline}[plain]
+      \setbeamertemplate{frametitle}[plain]
+      \setbeamertemplate{footline}[plain]
+    },
+    head/.code={\pgfkeys{/keli/outer/progressbar=none}
+      \addtobeamertemplate{headline}{}{%
+        \usebeamertemplate*{progress bar in head/foot}
+      }
+    },
+    frametitle/.code={\pgfkeys{/keli/outer/progressbar=none}
+      \addtobeamertemplate{frametitle}{}{%
+        \usebeamertemplate*{progress bar in head/foot}
+      }
+    },
+    foot/.code={\pgfkeys{/keli/outer/progressbar=none}
+      \addtobeamertemplate{footline}{}{%
+        \usebeamertemplate*{progress bar in head/foot}%
+      }
+    },
+}
+\newcommand{\keli@outer@setdefaults}{
+  \pgfkeys{/keli/outer/.cd,
+    numbering=counter,
+    progressbar=none,
+  }
+}
+% Disable nvigation symbols
+\setbeamertemplate{navigation symbols}{}
+\defbeamertemplate{frame footer}{none}{}
+\defbeamertemplate{frame footer}{custom}[1]{ #1 }
+\defbeamertemplate{frame numbering}{none}{}
+\defbeamertemplate{frame numbering}{counter}{\insertframenumber}
+\defbeamertemplate{frame numbering}{fraction}{
+  \insertframenumber/\inserttotalframenumber
+}
+\defbeamertemplate{headline}{plain}{}
+\defbeamertemplate{footline}{plain}{%
+  \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}
+    \hfill%
+    \usebeamertemplate*{frame numbering}
+  \end{beamercolorbox}%
+}
+\newlength{\keli@frametitle@padding}
+\setlength{\keli@frametitle@padding}{2.2ex}
+\newcommand{\keli@frametitlestrut@start}{
+  \rule{0pt}{\keli@frametitle@padding +%
+    \totalheightof{%
+      \ifcsdef{keli@frametitleformat}{\keli@frametitleformat X}{X}%
+    }%
+  }%
+}
+\newcommand{\keli@frametitlestrut@end}{
+  \rule[-\keli@frametitle@padding]{0pt}{\keli@frametitle@padding}
+}
+\defbeamertemplate{frametitle}{plain}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\keli@frametitle@padding,%
+      rightskip=\keli@frametitle@padding,%
+    ]{frametitle}%
+  \keli@frametitlestrut@start%
+  \insertframetitle%
+  \nolinebreak%
+  \keli@frametitlestrut@end%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{frametitle continuation}{%
+  \usebeamerfont{frametitle}
+  \romannumeral \insertcontinuationcount
+}
+\newlength{\keli@progressinheadfoot}
+\newlength{\keli@progressinheadfoot@linewidth}
+\setlength{\keli@progressinheadfoot@linewidth}{0.4pt}
+\setbeamertemplate{progress bar in head/foot}{
+  \nointerlineskip
+  \setlength{\keli@progressinheadfoot}{%
+    \paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+  }%
+  \begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
+    \tikzexternaldisable%
+    \begin{tikzpicture}
+      \fill[bg] (0,0) rectangle (\paperwidth, \keli@progressinheadfoot@linewidth);
+      \fill[fg] (0,0) rectangle (\keli@progressinheadfoot, \keli@progressinheadfoot@linewidth);
+    \end{tikzpicture}%
+    \tikzexternalenable%
+  \end{beamercolorbox}
+}
+\AtBeginDocument{%
+  \apptocmd{\appendix}{%
+    \pgfkeys{%
+      /keli/outer/.cd,
+      numbering=none,
+      progressbar=none}
+    }{}{}
+}
+\keli@outer@setdefaults
+\ProcessPgfPackageOptions{/keli/outer}
+\endinput
