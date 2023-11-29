@@ -1,0 +1,37 @@
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.pdf
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+
+# Build files
+# document/
+
+# Temporary files
+log/
+
+# Ignore compiled binaries and executables
+*.pdf
+*.png
+
+# Ignore LaTeX generated files
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# Ignore backup files
+*~
+
+# Ignore directories
+# 1frame/
+# 2figure/
+# 3ref/
+

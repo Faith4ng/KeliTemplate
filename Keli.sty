@@ -1,6 +1,9 @@
 % 定义所有的图片文件在 figures 子目录下
 \graphicspath{{2figure/}}
 
+
+% Loads the 'csquotes' package to handle quotation marks correctly for different languages
+\usepackage{csquotes}
 % margin
 \usepackage{geometry}
 \usepackage{fancyhdr}
@@ -16,6 +19,8 @@
 \usepackage{mathptmx}
 % theory env
 \usepackage{amsthm}
+% formula env
+\usepackage{siunitx}
 % Customized font code
 \usepackage{fontenc}
 % float body(pic, table, algo)setting, general set[H]
@@ -156,11 +161,11 @@
     \placefig{-0.01}{-0.01}
     {width=1.01\paperwidth,height=1.01\paperheight}
     {TitlePage}
-    \begin{textblock}{7.5}(1,3.5){
+    \begin{textblock}{7.5}(1,4){
         \color{white}\raggedright\usebeamerfont{title}\par\inserttitle
     }
     \end{textblock}
-    \begin{textblock}{7.5}(1,7){
+    \begin{textblock}{7.5}(1.2,7){
         \color{black!10}\raggedright\usebeamerfont{authordate}{\insertauthor}\\[0.5em]\insertdate}
     \end{textblock}
 }

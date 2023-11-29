@@ -1,30 +1,93 @@
+% !TeX spellcheck = none
+% !TeX root = ../document.tex
+
+\begin{frame}
+	\frametitle{Cite Test}
+	this is a content\footnotemark[\themynote]
+	
+	\footnotetext[\themynote]{\footcitetext{chuah_design_2015}}\stepcounter{mynote}
+\end{frame}
+
 \begin{frame}[fragile]
     \frametitle{Customized Command}
     \verb*|\atright{}|
     在当前行插入右对齐的文本
 
-    当前文本\atright{右对齐文本}
+    当前文本 \atright{右对齐文本}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Customized Command}
     \begin{verbatim}
-        \biz      或者     \ben
+        \biz      OR       \ben
         \item 1            \item 1
         \item 2            \item 2
         \eiz               \een
     \end{verbatim}
     逐帧生成动画
     
-   	Albert Einstein发现了质能方程\placetext{2.5em}{-1.5em}{$\boxed{E = m c^2}$}
+    \biz
+    \item 1
+    \item 2
+    \item 3
+    \eiz
 \end{frame}
 
 \begin{frame}
-    \begin{block}{标题}
-        这是一个块环境中的内容，出现在数学公式之前。
+    \frametitle{Customized Command}
+    在当前行最后一个字的{2.5em,-1.5em}处放置一个文本框
+    \placetext{2em}{-1.5em}{$\boxed{E = m c^2}$}
+\end{frame}
+
+\section{Blocks in Beamer}
+\begin{frame}
+    \frametitle{Blocks in Beamer}
+    \begin{block}{Standard Block}
+		This is a standard block.
+	\end{block}
+	\begin{alertblock}{Alert Message}
+		This block presents alert message.
+	\end{alertblock}
+	\begin{exampleblock}{An example of typesetting tool}
+		Example: MS Word, \LaTeX{}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Slide with mathematics}
+    Quantile Score for observation $y$.   For $0<p<1$:
+    \begin{block}{}
+      \[
+        S(y_t,q_t(p)) = \left\{
+        \begin{array}{rl}
+        p(y_t-q_t(p)) & \text{if $y_t \ge q_t(p)$}\\
+        (1-p)(q_t(p)-y_t) & \text{if $y_t < q_t(p)$}
+        \end{array}\right.
+      \]
     \end{block}
-    
-    \begin{equation*}
-        E = m c^2
-    \end{equation*}
+   Average score over all percentiles gives the best distribution forecast:
+      \[
+      QS = \frac{1}{99T}\sum_{p=1}^{99}\sum_{t=1}^T S(q_t(p),y_t)
+      \]
+\end{frame}
+
+\section{Figure in Beamer}
+\begin{frame}
+\frametitle{Figure in Beamer}
+	\begin{figure}
+		\includegraphics[height=0.7\textheight]{Figure_A.pdf}
+		\caption{Figure title}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{SAR Performance Statistics}
+    \begin{figure}[H]
+        \centering
+        \subfigure[subfigure-a]
+            {\includegraphics[height=0.5\textheight]{Figure_A}}
+        \hspace{0.05\linewidth}
+        \subfigure[subfigure-b]
+            {\includegraphics[height=0.5\textheight]{Figure_A}}
+        \caption{subfigures}
+    \end{figure}
 \end{frame}

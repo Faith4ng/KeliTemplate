@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 模板資訊：
+% 模板名稱：Keli Template
+% 版本：0.2 (2023.11.29)
+% 修改者：Faith Ang
+% 編譯器：XeLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% !TeX spellcheck = none
+% !TEX program = xelatex
+
+\documentclass[aspectratio=169,11pt,a4paper,c]{beamer}
+
+\usetheme{keli}
+\usefonttheme{keli}
+\usepackage{Keli}
+
+% Cite Format
+%\usepackage[style=verbose,backend=bibtex]{biblatex}
+\usepackage[style=authortitle,backend=bibtex]{biblatex}
+%\usepackage[style=authoryear,backend=bibtex]{biblatex}
+\setbeamerfont{footnote}{size=\tiny}
+\addbibresource{3ref/reference.bib}
+
+% hide section title
+\defbibheading{bibliography}[]{}  
+
+% new a counter
+\newcounter{mynote}
+\stepcounter{mynote}
+
+\title{幻灯片模板}
+\author{制作人}
+\institute{所属机构}
+\date{\today}
+
+\begin{document}
+
+% Title Page
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Content
+\begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+% Template
+\input{1frame/template.tex}
+
+% % User Page
+% \input{1frame/slide}
+
+% % Reference Page
+% \begin{frame}
+%   \frametitle{参考文献}
+%   \printbibliography[title={}]
+% \end{frame}
+
+\end{document}
